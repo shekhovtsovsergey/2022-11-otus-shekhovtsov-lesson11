@@ -57,4 +57,12 @@ public class CommentDaoJpa implements CommentDao {
         query.setParameter("id", id);
         query.executeUpdate();
     }
+
+    @Override
+    public void deleteBookById(Long id) {
+        Query query = em.createQuery("delete from Comment c where c.book.id = :id");
+        query.setParameter("id", id);
+        query.executeUpdate();
+    }
+
 }

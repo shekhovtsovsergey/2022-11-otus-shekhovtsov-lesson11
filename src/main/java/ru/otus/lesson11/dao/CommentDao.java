@@ -19,4 +19,6 @@ public interface CommentDao {
 
     void deleteById(Long id);
 
+    void deleteBookById(Long id);
+
 }

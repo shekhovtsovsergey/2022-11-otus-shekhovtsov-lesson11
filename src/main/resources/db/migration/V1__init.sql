@@ -1,7 +1,6 @@
-drop table if exists comments;
-drop table if exists books;
-drop table if exists genres;
-drop table if exists authors;
+drop table if exists BOOKS, COMMENTS CASCADE;
+drop table if exists GENRES;
+drop table if exists AUTHORS;
 
 CREATE TABLE AUTHORS
 (
@@ -36,13 +35,13 @@ CREATE TABLE BOOKS
 CREATE TABLE COMMENTS
 (
     ID          BIGSERIAL    NOT NULL PRIMARY KEY,
-    BOOK_ID     BIGSERIAL    NOT NULL,
+    BOOK_ID     BIGINT    NOT NULL,
     AUTHOR_NAME VARCHAR(255) NOT NULL DEFAULT 'ANON',
     COMMENT     VARCHAR(255) NOT NULL,
 
     CONSTRAINT fk_books_comments
         FOREIGN KEY (BOOK_ID)
-            REFERENCES BOOKS (id) ON DELETE CASCADE
+            REFERENCES BOOKS (id)
 );
 
 INSERT INTO AUTHORS (NAME) VALUES('Lean Nielsen');
