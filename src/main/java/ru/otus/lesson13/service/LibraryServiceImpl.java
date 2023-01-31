@@ -1,17 +1,17 @@
-package ru.otus.lesson11.service;
+package ru.otus.lesson13.service;
 
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.otus.lesson11.dao.AuthorDao;
-import ru.otus.lesson11.dao.BookDao;
-import ru.otus.lesson11.dao.CommentDao;
-import ru.otus.lesson11.dao.GenreDao;
-import ru.otus.lesson11.model.Author;
-import ru.otus.lesson11.model.Book;
-import ru.otus.lesson11.model.Comment;
-import ru.otus.lesson11.model.Genre;
+import ru.otus.lesson13.dao.AuthorDao;
+import ru.otus.lesson13.dao.BookDao;
+import ru.otus.lesson13.dao.CommentDao;
+import ru.otus.lesson13.dao.GenreDao;
+import ru.otus.lesson13.model.Author;
+import ru.otus.lesson13.model.Book;
+import ru.otus.lesson13.model.Comment;
+import ru.otus.lesson13.model.Genre;
 
 import java.util.List;
 import java.util.Optional;
@@ -81,13 +81,19 @@ public class LibraryServiceImpl implements LibraryService {
     @Override
     @Transactional
     public void updateBookById(Long id, String name, Author author, Genre genre) {
-        bookDao.updateById(id, name, author, genre);
+        Optional<Book> bookById = bookDao.findById(id);
+        bookById.ifPresent(book -> {
+            book.setName(name);
+            book.setAuthor(author);
+            book.setGenre(genre);
+            bookDao.save(book);
+        });
     }
 
     @Override
     @Transactional
     public void deleteBookById(Long id) {
-        commentDao.deleteBookById(id);
+        commentDao.deleteCommentByBook(id);
         bookDao.deleteById(id);
     }
 

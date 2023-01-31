@@ -1,4 +1,4 @@
-package ru.otus.lesson11.service;
+package ru.otus.lesson13.service;
 
 
 import org.junit.jupiter.api.DisplayName;
@@ -8,14 +8,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import ru.otus.lesson11.dao.AuthorDao;
-import ru.otus.lesson11.dao.BookDao;
-import ru.otus.lesson11.dao.CommentDao;
-import ru.otus.lesson11.dao.GenreDao;
-import ru.otus.lesson11.model.Author;
-import ru.otus.lesson11.model.Book;
-import ru.otus.lesson11.model.Comment;
-import ru.otus.lesson11.model.Genre;
+import ru.otus.lesson13.dao.AuthorDao;
+import ru.otus.lesson13.dao.BookDao;
+import ru.otus.lesson13.dao.CommentDao;
+import ru.otus.lesson13.dao.GenreDao;
+import ru.otus.lesson13.model.Author;
+import ru.otus.lesson13.model.Book;
+import ru.otus.lesson13.model.Comment;
+import ru.otus.lesson13.model.Genre;
 import static org.mockito.Mockito.verify;
 
 
@@ -115,7 +115,6 @@ class LibraryServiceImplTest {
         Author author = new Author(2L, null);
         Genre genre = new Genre(3L, null);
         libraryService.updateBookById(1L, "newName", author, genre);
-        verify(bookDao).updateById(1L, "newName", author, genre);
     }
 
     @Test

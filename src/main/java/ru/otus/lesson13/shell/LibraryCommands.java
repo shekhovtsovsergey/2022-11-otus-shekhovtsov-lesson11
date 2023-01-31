@@ -1,14 +1,14 @@
-package ru.otus.lesson11.shell;
+package ru.otus.lesson13.shell;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
-import ru.otus.lesson11.model.Author;
-import ru.otus.lesson11.model.Book;
-import ru.otus.lesson11.model.Comment;
-import ru.otus.lesson11.model.Genre;
-import ru.otus.lesson11.service.LibraryService;
+import ru.otus.lesson13.model.Author;
+import ru.otus.lesson13.model.Book;
+import ru.otus.lesson13.model.Comment;
+import ru.otus.lesson13.model.Genre;
+import ru.otus.lesson13.service.LibraryService;
 
 import java.util.List;
 import java.util.Optional;

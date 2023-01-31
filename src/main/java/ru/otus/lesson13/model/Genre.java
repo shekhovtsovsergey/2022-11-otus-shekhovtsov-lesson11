@@ -1,4 +1,4 @@
-package ru.otus.lesson11.model;
+package ru.otus.lesson13.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

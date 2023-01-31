@@ -1,4 +1,4 @@
-package ru.otus.lesson11;
+package ru.otus.lesson13;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

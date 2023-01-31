@@ -1,7 +1,6 @@
-package ru.otus.lesson11.model;
+package ru.otus.lesson13.model;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.BatchSize;
 
@@ -13,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "books")
+@NamedEntityGraph(name = "Book.allAttributes", includeAllAttributes = true)
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
