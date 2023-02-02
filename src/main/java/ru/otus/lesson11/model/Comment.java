@@ -9,22 +9,18 @@ import javax.persistence.*;
 import java.util.Objects;
 
 
+@Entity
+@Table(name = "comments")
+@NamedEntityGraph(name = "Comments-bookId", attributeNodes = @NamedAttributeNode("book"))
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@NamedEntityGraph(name = "Comments-bookId", attributeNodes = @NamedAttributeNode("book"))
-@Entity
-@Table(name = "comments")
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-/*    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "book_id", nullable = false)
-    private Book book;*/
 
     @ManyToOne()
     @Fetch(value = FetchMode.JOIN)

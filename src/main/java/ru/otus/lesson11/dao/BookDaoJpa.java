@@ -2,20 +2,18 @@ package ru.otus.lesson11.dao;
 
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 import ru.otus.lesson11.model.Author;
 import ru.otus.lesson11.model.Book;
 import ru.otus.lesson11.model.Genre;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
 import java.util.Optional;
 
+@Component
 @RequiredArgsConstructor
-@Repository
 public class BookDaoJpa implements BookDao {
 
     @PersistenceContext
@@ -71,20 +69,9 @@ public class BookDaoJpa implements BookDao {
     }
 
     @Override
-    public void updateById(Long id, String name, Author author, Genre genre) {
-        Query query = em.createQuery("update Book b set b.name = :name, b.author = :author, b.genre = :genre where b.id = :id");
-        query.setParameter("id", id);
-        query.setParameter("name", name);
-        query.setParameter("author", author);
-        query.setParameter("genre", genre);
-        query.executeUpdate();
-    }
-
-    @Override
     public void deleteById(Long id) {
-        Query query = em.createQuery("delete from Book b where b.id = :id");
-        query.setParameter("id", id);
-        query.executeUpdate();
+        Book managedEntity = em.find(Book.class, id);
+        em.remove(managedEntity);
     }
 
 }

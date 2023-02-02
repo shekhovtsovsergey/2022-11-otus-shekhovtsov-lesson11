@@ -13,8 +13,8 @@ import ru.otus.lesson11.service.LibraryService;
 import java.util.List;
 import java.util.Optional;
 
-@RequiredArgsConstructor
 @ShellComponent
+@RequiredArgsConstructor
 public class LibraryCommands {
     private final LibraryService libraryService;
 
@@ -37,7 +37,7 @@ public class LibraryCommands {
 
     @ShellMethod(value = "Insert book command", key = {"insertBook"})
     public String insertBook(@ShellOption String bookName, @ShellOption Long authorId, @ShellOption Long genreId) {
-        libraryService.insertBook(new Book(null, bookName, new Author(authorId, null), new Genre(genreId, null), (List<Comment>) new Comment(null,null,null,null)));
+        libraryService.insertBook(new Book(null, bookName, new Author(authorId, null), new Genre(genreId, null)));
         return String.format("Книга добавлена:");
     }
 
@@ -75,8 +75,8 @@ public class LibraryCommands {
 
     @ShellMethod(value = "Update book by id", key = {"updateBook"})
     public String updateBookById(@ShellOption Long id, @ShellOption String bookName, @ShellOption Long authorId, @ShellOption Long genreId) {
-        libraryService.updateBookById(id, bookName, new Author(authorId, null), new Genre(genreId, null));
-        return String.format("Книга обновлена");
+        libraryService.insertBook(new Book(id, bookName, new Author(authorId, null), new Genre(genreId, null)));
+        return String.format("Книга обновлена:");
     }
 
     @ShellMethod(value = "Delete book by id", key = {"deleteBookById"})
@@ -98,8 +98,8 @@ public class LibraryCommands {
     }
 
     @ShellMethod(value = "Update comment by id", key = {"updateComment"})
-    public String updateCommentById(@ShellOption Long id, @ShellOption String authorName, @ShellOption String comment) {
-        libraryService.updateCommentById(id, authorName, comment);
+    public String updateCommentById(@ShellOption Long id, @ShellOption Long bookId, @ShellOption String authorName, @ShellOption String comment) {
+        libraryService.insertComment(new Comment(id,new Book(bookId, null, null, null,null), authorName, comment));
         return String.format("Комментарий изменен");
     }
 

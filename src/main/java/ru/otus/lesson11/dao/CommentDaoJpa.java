@@ -2,7 +2,7 @@ package ru.otus.lesson11.dao;
 
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 import ru.otus.lesson11.model.Book;
 import ru.otus.lesson11.model.Comment;
 
@@ -13,8 +13,8 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 import java.util.Optional;
 
+@Component
 @RequiredArgsConstructor
-@Repository
 public class CommentDaoJpa implements CommentDao {
 
     @PersistenceContext
@@ -42,20 +42,12 @@ public class CommentDaoJpa implements CommentDao {
         return query.getResultList();
     }
 
-    @Override
-    public void updateById(Long id, String authorName, String comment) {
-        Query query = em.createQuery("update Comment c set c.authorName = :authorName, c.comment = :comment where c.id = :id");
-        query.setParameter("id", id);
-        query.setParameter("authorName", authorName);
-        query.setParameter("comment", comment);
-        query.executeUpdate();
-    }
+
 
     @Override
     public void deleteById(Long id) {
-        Query query = em.createQuery("delete from Comment c where c.id = :id");
-        query.setParameter("id", id);
-        query.executeUpdate();
+        Comment managedEntity = em.find(Comment.class, id);
+        em.remove(managedEntity);
     }
 
     @Override
@@ -64,5 +56,12 @@ public class CommentDaoJpa implements CommentDao {
         query.setParameter("id", id);
         query.executeUpdate();
     }
+
+    @Override
+    public List<Comment> findAll() {
+        Query query = em.createQuery("select c from Comment c");
+        return query.getResultList();
+    }
+
 
 }

@@ -67,7 +67,7 @@ class CommentDaoJpaTest {
     @Test
     @DisplayName("обновляет данные комментария по id")
     void updateById() {
-        commentDaoJpa.updateById(PETR1_LONG_WALK_COMMENT_ID, "testAuthorName", "testComment");
+        commentDaoJpa.save(new Comment(PETR1_LONG_WALK_COMMENT_ID,new Book(2L,null,null,null), "testAuthorName", "testComment"));
         Optional<Comment> actualComment = commentDaoJpa.findById(PETR1_LONG_WALK_COMMENT_ID);
         assertAll(() -> assertThat(actualComment).get().extracting(Comment::getBook).isEqualTo(em.find(Book.class, LONG_WALK_BOOK_ID)),
                 () -> assertThat(actualComment).get().extracting(Comment::getAuthorName).isEqualTo("testAuthorName"),

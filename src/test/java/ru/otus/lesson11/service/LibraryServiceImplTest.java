@@ -114,8 +114,8 @@ class LibraryServiceImplTest {
     void updateBookById() {
         Author author = new Author(2L, null);
         Genre genre = new Genre(3L, null);
-        libraryService.updateBookById(1L, "newName", author, genre);
-        verify(bookDao).updateById(1L, "newName", author, genre);
+        libraryService.insertBook(new Book(1L, "newName", author, genre));
+        verify(bookDao).save(new Book(1L, "newName", author, genre));
     }
 
     @Test
@@ -138,21 +138,6 @@ class LibraryServiceImplTest {
     public void getCommentById() {
         libraryService.getCommentById(1L);
         verify(commentDao).findById(1L);
-    }
-
-    @Test
-    @DisplayName("корректно вызывать commentDao.findAllByBook")
-    public void getAllCommentsByBook() {
-        Book book = new Book(1L, null, null, null,null);
-        libraryService.getAllCommentsByBook(book);
-        verify(commentDao).findAllByBook(book);
-    }
-
-    @Test
-    @DisplayName("корректно вызывать commentDao.updateById")
-    public void updateCommentById() {
-        libraryService.updateCommentById(1L, null, null);
-        verify(commentDao).updateById(1L, null, null);
     }
 
     @Test

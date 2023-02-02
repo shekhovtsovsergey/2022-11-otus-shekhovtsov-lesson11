@@ -29,8 +29,6 @@ public interface LibraryService {
 
     List<Book> getAllBooksByAuthorAndGenre(Author author, Genre genre);
 
-    void updateBookById(Long id, String name, Author author, Genre genre);
-
     void deleteBookById(Long id);
 
     Comment insertComment(Comment comment);
@@ -38,8 +36,6 @@ public interface LibraryService {
     Optional<Comment> getCommentById(Long id);
 
     List<Comment> getAllCommentsByBook(Book book);
-
-    void updateCommentById(Long id, String authorName, String comment);
 
     void deleteCommentById(Long id);
 

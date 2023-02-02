@@ -15,10 +15,11 @@ public interface CommentDao {
 
     List<Comment> findAllByBook(Book book);
 
-    void updateById(Long id, String authorName, String comment);
 
     void deleteById(Long id);
 
     void deleteBookById(Long id);
+
+    List<Comment> findAll();
 
 }

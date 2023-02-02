@@ -24,8 +24,6 @@ public interface BookDao {
 
     List<Book> findAllByAuthorAndGenre(Author author, Genre genre);
 
-    void updateById(Long id, String name, Author author, Genre genre);
-
     void deleteById(Long id);
 
 }

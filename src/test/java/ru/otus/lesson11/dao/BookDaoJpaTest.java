@@ -98,7 +98,7 @@ class BookDaoJpaTest {
     @Test
     @DisplayName("обновляет данные книги по id")
     void updateById() {
-        bookDaoJpa.updateById(BOOK_ID, "testName", new Author(3L, null), new Genre(2L, null));
+        bookDaoJpa.save(new Book(BOOK_ID, "testName", new Author(3L, null), new Genre(2L, null)));
         Optional<Book> actualBook = bookDaoJpa.findById(BOOK_ID);
         assertAll(() -> assertThat(actualBook).get().extracting(Book::getName).isEqualTo("testName"),
                 () -> assertThat(actualBook).get().extracting(Book::getAuthor).extracting(Author::getId).isEqualTo(3L),
