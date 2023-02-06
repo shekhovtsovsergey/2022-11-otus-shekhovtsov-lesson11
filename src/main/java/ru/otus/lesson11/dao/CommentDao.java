@@ -13,9 +13,6 @@ public interface CommentDao {
 
     Optional<Comment> findById(Long id);
 
-    List<Comment> findAllByBook(Book book);
-
-
     void deleteById(Long id);
 
     void deleteBookById(Long id);
