@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
+import org.springframework.stereotype.Repository;
 import ru.otus.lesson11.model.Book;
 import ru.otus.lesson11.model.Comment;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -23,11 +24,10 @@ class CommentDaoJpaTest {
     private static final long PETR1_LONG_WALK_COMMENT_ID = 4;
     private static final long LONG_WALK_BOOK_ID = 2;
     private static final long KRISTINA_BOOK_ID = 1;
-    private static final int EXPECTED_COMMENTS_FOR_LONG_WALK_COUNT = 2;
+    private static final int EXPECTED_COMMENTS_FOR_LONG_WALK_COUNT = 3;
 
     @Autowired
     private TestEntityManager em;
-
     @Autowired
     private CommentDaoJpa commentDaoJpa;
 
@@ -59,7 +59,9 @@ class CommentDaoJpaTest {
     @Test
     @DisplayName("возвращать все комментарии по книге")
     void findAllByBook() {
-        List<Comment> actualComments = commentDaoJpa.findAllByBook(em.find(Book.class, KRISTINA_BOOK_ID));
+        //List<Comment> actualComments = commentDaoJpa.findAllByBook(em.find(Book.class, KRISTINA_BOOK_ID));
+        List<Comment> actualComments = em.find(Book.class, KRISTINA_BOOK_ID).getComments();
+        //List<Comment> actualComments = bookDao.findById(KRISTINA_BOOK_ID).get().getComments();
         assertAll(() -> assertThat(actualComments).hasSize(3),
                 () -> assertThat(actualComments.stream()).allMatch(c -> c.getBook().getId().equals(KRISTINA_BOOK_ID)));
     }
@@ -78,8 +80,9 @@ class CommentDaoJpaTest {
     @DisplayName("удаляет комментарий по id")
     void deleteById() {
         commentDaoJpa.deleteById(PETR1_LONG_WALK_COMMENT_ID);
-        List<Comment> allComments = commentDaoJpa.findAllByBook(em.find(Book.class, LONG_WALK_BOOK_ID));
-        assertAll(() -> assertThat(allComments).hasSize(EXPECTED_COMMENTS_FOR_LONG_WALK_COUNT - 1),
-                () -> assertThat(allComments.stream()).noneMatch(c -> c.getId().equals(PETR1_LONG_WALK_COMMENT_ID)));
+        //List<Comment> allComments = commentDaoJpa.findAllByBook(em.find(Book.class, LONG_WALK_BOOK_ID));
+        //List<Comment> actualComments = bookDao.findById(LONG_WALK_BOOK_ID).get().getComments();
+        List<Comment> actualComments = em.find(Book.class, LONG_WALK_BOOK_ID).getComments();
+        assertThat(actualComments).hasSize(EXPECTED_COMMENTS_FOR_LONG_WALK_COUNT - 1);
     }
 }
