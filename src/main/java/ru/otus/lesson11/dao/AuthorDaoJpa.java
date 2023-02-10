@@ -3,7 +3,6 @@ package ru.otus.lesson11.dao;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
 import ru.otus.lesson11.model.Author;
 
 import javax.persistence.EntityManager;

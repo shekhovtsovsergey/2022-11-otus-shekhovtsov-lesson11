@@ -1,13 +1,9 @@
 package ru.otus.lesson11.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-
 import javax.persistence.*;
-import java.util.Objects;
-
 
 @Entity
 @Table(name = "comments")

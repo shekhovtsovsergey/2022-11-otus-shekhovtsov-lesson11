@@ -3,10 +3,8 @@ package ru.otus.lesson11.dao;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 import ru.otus.lesson11.model.Book;
 import ru.otus.lesson11.model.Comment;
-
 import javax.persistence.*;
 import java.util.List;
 import java.util.Optional;

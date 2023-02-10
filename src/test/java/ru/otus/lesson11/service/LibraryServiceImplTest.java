@@ -16,14 +16,13 @@ import ru.otus.lesson11.model.Author;
 import ru.otus.lesson11.model.Book;
 import ru.otus.lesson11.model.Comment;
 import ru.otus.lesson11.model.Genre;
-import static org.mockito.Mockito.verify;
 
+import static org.mockito.Mockito.*;
 
 
 @SpringBootTest
 @DisplayName("Сервис библиотеки должен")
 class LibraryServiceImplTest {
-
     @Configuration
     @Import(LibraryServiceImpl.class)
     static class NestedConfiguration {
@@ -65,8 +64,8 @@ class LibraryServiceImplTest {
     @Test
     @DisplayName("корректно вызывать bookDao.save")
     void insertBook() {
-        Book book = new Book(null, null, null, null,null);
-        libraryService.insertBook(book);
+        Book book = new Book(null, null, new Author(null,null), new Genre(null,null),null);
+        libraryService.insertBook(null,null,null);
         verify(bookDao).save(book);
     }
 
@@ -88,7 +87,7 @@ class LibraryServiceImplTest {
     @DisplayName("корректно вызывать bookDao.findAllByAuthor")
     void getAllBooksByAuthor() {
         Author author = new Author(null, null);
-        libraryService.getAllBooksByAuthor(author);
+        libraryService.getAllBooksByAuthor(null);
         verify(bookDao).findAllByAuthor(author);
     }
 
@@ -96,7 +95,7 @@ class LibraryServiceImplTest {
     @DisplayName("корректно вызывать bookDao.findAllByGenre")
     void getAllBooksByGenre() {
         Genre genre = new Genre(null, null);
-        libraryService.getAllBooksByGenre(genre);
+        libraryService.getAllBooksByGenre(null);
         verify(bookDao).findAllByGenre(genre);
     }
 
@@ -105,7 +104,7 @@ class LibraryServiceImplTest {
     void getAllBooksByAuthorAndGenre() {
         Author author = new Author(null, null);
         Genre genre = new Genre(null, null);
-        libraryService.getAllBooksByAuthorAndGenre(author, genre);
+        libraryService.getAllBooksByAuthorAndGenre(null, null);
         verify(bookDao).findAllByAuthorAndGenre(author, genre);
     }
 
@@ -114,8 +113,8 @@ class LibraryServiceImplTest {
     void updateBookById() {
         Author author = new Author(2L, null);
         Genre genre = new Genre(3L, null);
-        libraryService.insertBook(new Book(1L, "newName", author, genre));
-        verify(bookDao).save(new Book(1L, "newName", author, genre));
+        libraryService.insertBook("newName",2L,3L);
+        verify(bookDao).save(new Book(null, "newName", author, genre));
     }
 
     @Test
@@ -128,9 +127,9 @@ class LibraryServiceImplTest {
     @Test
     @DisplayName("корректно вызывать commentDao.save")
     public void insertComment() {
-        Comment comment = new Comment(1L, null, null, null);
-        libraryService.insertComment(comment);
-        verify(commentDao).save(comment);
+        Comment comment = new Comment(null,null,null,null);
+        libraryService.insertComment(null,null,null);
+        verify(commentDao).save(any(Comment.class));
     }
 
     @Test

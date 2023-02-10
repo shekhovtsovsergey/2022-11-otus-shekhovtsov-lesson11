@@ -12,7 +12,6 @@ import ru.otus.lesson11.model.Author;
 import ru.otus.lesson11.model.Book;
 import ru.otus.lesson11.model.Comment;
 import ru.otus.lesson11.model.Genre;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -24,14 +23,17 @@ public class LibraryServiceImpl implements LibraryService {
     private final BookDao bookDao;
     private final CommentDao commentDao;
 
+
     @Override
-    public List<Author> getAllAuthors() {
-        return authorDao.findAll();
+    public String getAllAuthors() {
+        List<Author> authors = authorDao.findAll();
+        return String.format("Все авторы библиотеки: %s", authors);
     }
 
     @Override
-    public List<Genre> getAllGenres() {
-        return genreDao.findAll();
+    public String getAllGenres() {
+        List<Genre> genres = genreDao.findAll();
+        return String.format("Все жанры библиотеки: %s", genres);
     }
 
     @Override
@@ -41,60 +43,94 @@ public class LibraryServiceImpl implements LibraryService {
 
     @Override
     @Transactional
-    public Book insertBook(Book book) {
-        return bookDao.save(book);
-    }
-
-    @Override
-    public Optional<Book> getBookById(Long id) {
-        return bookDao.findById(id);
-    }
-
-    @Override
-    public List<Book> getAllBooks() {
-        return bookDao.findAll();
-    }
-
-    @Override
-    public List<Book> getAllBooksByAuthor(Author author) {
-        return bookDao.findAllByAuthor(author);
-    }
-
-    @Override
-    public List<Book> getAllBooksByGenre(Genre genre) {
-        return bookDao.findAllByGenre(genre);
-    }
-
-    @Override
-    public List<Book> getAllBooksByAuthorAndGenre(Author author, Genre genre) {
-        return bookDao.findAllByAuthorAndGenre(author, genre);
+    public String insertBook(String bookName,Long authorId,Long genreId) {
+        bookDao.save((new Book(null, bookName, new Author(authorId, null), new Genre(genreId, null))));
+        return String.format("Книга добавлена:");
     }
 
     @Override
     @Transactional
-    public void deleteBookById(Long id) {
+    public String updateBook(Long id, String bookName,Long authorId,Long genreId) {
+        bookDao.save((new Book(id, bookName, new Author(authorId, null), new Genre(genreId, null))));
+        return String.format("Книга обновлена:");
+    }
+
+    @Override
+    @Transactional
+    public String getBookById(Long id) {
+        Optional<Book> book =bookDao.findById(id);
+        return book.isEmpty() ?  String.format("Книги с id: %d не существует", id) : String.format("Вы взяли книгу: %s", book);
+    }
+
+    @Override
+    @Transactional
+    public String getAllBooks() {
+        List<Book> allBooks = bookDao.findAll();
+        return String.format("Все книги библиотеки: %s", allBooks);
+    }
+
+    @Override
+    @Transactional
+    public String getAllBooksByAuthor(Long authorId) {
+        List<Book> allBooksByAuthor = bookDao.findAllByAuthor(new Author(authorId, null));
+        return String.format("Вы взяли следующие книги по автору: %s", allBooksByAuthor);
+    }
+
+    @Override
+    @Transactional
+    public String getAllBooksByGenre(Long genreId) {
+        List<Book> allBooksByGenre = bookDao.findAllByGenre(new Genre(genreId, null));
+        return String.format("Вы взяли следующие книги по жанру: %s", allBooksByGenre);
+    }
+
+    @Override
+    @Transactional
+    public String getAllBooksByAuthorAndGenre(Long authorId, Long genreId) {
+        List<Book> allBooksByAuthorAndGenre = bookDao.findAllByAuthorAndGenre(
+                new Author(authorId, null),
+                new Genre(genreId, null));
+        return String.format("Вы взяли следующие книги по автору и жанру: %s", allBooksByAuthorAndGenre);
+    }
+
+    @Override
+    @Transactional
+    public String deleteBookById(Long id) {
         commentDao.deleteBookById(id);
         bookDao.deleteById(id);
+        return String.format("Книга удалена");
     }
 
     @Override
     @Transactional
-    public Comment insertComment(Comment comment) {
-        return commentDao.save(comment);
+    public String insertComment(Long bookId,  String authorName,  String comment) {
+        commentDao.save(new Comment(null, new Book(bookId, null, null, null,null), authorName, comment));
+        return String.format("Комментарий добавлен");
     }
 
     @Override
-    public Optional<Comment> getCommentById(Long id) {
-        return commentDao.findById(id);
+    @Transactional
+    public String updateComment(Long id, Long bookId,  String authorName,  String comment) {
+        commentDao.save(new Comment(id, new Book(bookId, null, null, null,null), authorName, comment));
+        return String.format("Комментарий изменен");
     }
 
     @Override
-    public List<Comment> getAllCommentsByBook(Book book) {
-        return bookDao.findById(book.getId()).get().getComments();
+    public String getCommentById(Long id) {
+        Optional<Comment> comments = commentDao.findById(id);
+        return String.format("Комментарий: %s", comments);
     }
 
     @Override
-    public void deleteCommentById(Long id) {
+    @Transactional
+    public String getAllCommentsByBook(Long bookId) {
+        List<Comment> allCommentsByBook = bookDao.findById(bookId).get().getComments();
+        return String.format("Вы взяли следующие комментарии по книге: %s", allCommentsByBook);
+    }
+
+    @Override
+    @Transactional
+    public String deleteCommentById(Long id) {
         commentDao.deleteById(id);
+        return String.format("Комментарий удален");
     }
 }

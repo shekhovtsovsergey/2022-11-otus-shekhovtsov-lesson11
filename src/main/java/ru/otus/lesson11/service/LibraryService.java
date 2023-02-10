@@ -1,42 +1,23 @@
 package ru.otus.lesson11.service;
 
 
-import ru.otus.lesson11.model.Author;
-import ru.otus.lesson11.model.Book;
-import ru.otus.lesson11.model.Comment;
-import ru.otus.lesson11.model.Genre;
-
-import java.util.List;
-import java.util.Optional;
-
 public interface LibraryService {
 
-    List<Author> getAllAuthors();
-
-    List<Genre> getAllGenres();
-
+    String getAllAuthors();
+    String getAllGenres();
     Long booksCount();
-
-    Book insertBook(Book book);
-
-    Optional<Book> getBookById(Long id);
-
-    List<Book> getAllBooks();
-
-    List<Book> getAllBooksByAuthor(Author author);
-
-    List<Book> getAllBooksByGenre(Genre genre);
-
-    List<Book> getAllBooksByAuthorAndGenre(Author author, Genre genre);
-
-    void deleteBookById(Long id);
-
-    Comment insertComment(Comment comment);
-
-    Optional<Comment> getCommentById(Long id);
-
-    List<Comment> getAllCommentsByBook(Book book);
-
-    void deleteCommentById(Long id);
+    String insertBook(String bookName,Long authorId,Long genreId);
+    String updateBook(Long id, String bookName,Long authorId,Long genreId);
+    String getBookById(Long id);
+    String getAllBooks();
+    String getAllBooksByAuthor(Long authorId);
+    String getAllBooksByGenre(Long genreId);
+    String getAllBooksByAuthorAndGenre(Long authorId, Long genreId);
+    String deleteBookById(Long id);
+    String insertComment(Long bookId,  String authorName,  String comment);
+    String updateComment(Long id, Long bookId,  String authorName,  String comment);
+    String getCommentById(Long id);
+    String getAllCommentsByBook(Long bookId);
+    String deleteCommentById(Long id);
 
 }
